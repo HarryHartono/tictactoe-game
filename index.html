@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tic-Tac-Toe</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>  
+        <div id="game-container"></div>
+
+        <script>
+            const gameContainer = document.getElementById('game-container');
+
+            const waysToWin = [
+                ['button1', 'button2', 'button3'],
+                ['button4', 'button5', 'button6'],
+                ['button7', 'button8', 'button9'],
+                ['button1', 'button4', 'button7'],
+                ['button2', 'button5', 'button8'],
+                ['button3', 'button6', 'button9'],
+                ['button1', 'button5', 'button9'],
+                ['button3', 'button5', 'button7'],
+            ];
+
+            let movesMade = 0;
+            let computerChoice = ['button1', 'button2', 'button3', 'button4', 'button5', 'button6', 'button7', 'button8', 'button9'];
+            let playerChoice = [];
+
+            const buttonChoice1 = document.createElement('button');
+            const buttonChoice2 = document.createElement('button');
+            const buttonChoice3 = document.createElement('button');
+            const buttonChoice4 = document.createElement('button');
+            const buttonChoice5 = document.createElement('button');
+            const buttonChoice6 = document.createElement('button');
+            const buttonChoice7 = document.createElement('button');
+            const buttonChoice8 = document.createElement('button');
+            const buttonChoice9 = document.createElement('button');
+            buttonChoice1.classList.add('button-style');
+            buttonChoice2.classList.add('button-style');
+            buttonChoice3.classList.add('button-style');
+            buttonChoice4.classList.add('button-style');
+            buttonChoice5.classList.add('button-style');
+            buttonChoice6.classList.add('button-style');
+            buttonChoice7.classList.add('button-style');
+            buttonChoice8.classList.add('button-style');
+            buttonChoice9.classList.add('button-style');
+            buttonChoice1.id = 'button1';
+            buttonChoice2.id = 'button2';
+            buttonChoice3.id = 'button3';
+            buttonChoice4.id = 'button4';
+            buttonChoice5.id = 'button5';
+            buttonChoice6.id = 'button6';
+            buttonChoice7.id = 'button7';
+            buttonChoice8.id = 'button8';
+            buttonChoice9.id = 'button9';
+
+            const blankImage = document.createElement('img');
+            blankImage.src = 'graphics/empty-canvas.png';
+            
+            const xImage = document.createElement('img');
+            xImage.classList.add('game-image');
+            xImage.src = 'graphics/x-1.png'
+
+            const oImage = document.createElement('img');
+            oImage.classList.add('game-image');
+            oImage.src = 'graphics/o-1.png'
+
+            const playTTT = event => {
+                const buttonPressChoice = event.target
+                choiceOfPlayer = buttonPressChoice.id
+                gameContainer.innerHTML = '';
+                
+                const playGameCont = document.createElement('div');
+                playGameCont.style = 'width: 600px; display: grid; grid-template-columns: 1fr 1fr 1fr;'
+        
+                buttonChoice1.onclick = playerMakesMove;
+                buttonChoice2.onclick = playerMakesMove;
+                buttonChoice3.onclick = playerMakesMove;
+                buttonChoice4.onclick = playerMakesMove;
+                buttonChoice5.onclick = playerMakesMove;
+                buttonChoice6.onclick = playerMakesMove;
+                buttonChoice7.onclick = playerMakesMove;
+                buttonChoice8.onclick = playerMakesMove;
+                buttonChoice9.onclick = playerMakesMove;
+                playGameCont.appendChild(buttonChoice1);
+                playGameCont.appendChild(buttonChoice2);
+                playGameCont.appendChild(buttonChoice3);
+                playGameCont.appendChild(buttonChoice4);
+                playGameCont.appendChild(buttonChoice5);
+                playGameCont.appendChild(buttonChoice6);
+                playGameCont.appendChild(buttonChoice7);
+                playGameCont.appendChild(buttonChoice8);
+                playGameCont.appendChild(buttonChoice9);
+
+                gameContainer.appendChild(playGameCont);
+            };
+
+            const playerMakesMove = event => {
+                movesMade = movesMade + 1
+                const playerChoosenBox = event.target;
+                playerChoice.push(playerChoosenBox.id);
+
+                if (movesMade <= 4) {
+                    computerChoice = computerChoice.filter(choice => choice !== playerChoosenBox.id);
+                    let computerMoveNow = computerChoice[Math.floor(Math.random()*computerChoice.length)];
+                    document.getElementById(computerMoveNow).innerHTML = '<img class="game-image" src="graphics/o-1.png">';
+                    document.getElementById(computerMoveNow).disabled = true;
+                    computerChoice = computerChoice.filter(choice => choice !== computerMoveNow);
+                    playerChoice.forEach(choice => {
+                        document.getElementById(choice).innerHTML = '<img class="game-image" src="graphics/x-1.png">';
+                    });
+                
+                    document.getElementById(playerChoosenBox.id).disabled = true;
+                } else {
+                    playerChoice.forEach(choice => {
+                        document.getElementById(choice).innerHTML = '<img class="game-image" src="graphics/x-1.png">';
+                    });
+                    document.getElementById(playerChoosenBox.id).disabled = true;
+                }
+            };
+            
+
+            const renderOptionXO = () => {
+                gameContainer.innerHTML = '';
+
+                const optionX = document.createElement('button');
+                optionX.innerText = 'X';
+                optionX.id = 'X'
+                optionX.onclick = playTTT;
+                gameContainer.appendChild(optionX);
+
+                const optionO = document.createElement('button');
+                optionO.innerText = 'O';
+                optionO.id = 'O';
+                optionO.onclick = playTTT;
+                gameContainer.appendChild(optionO);
+            };
+
+            renderOptionXO();
+            
+            
+
+        </script>
+    </body>
+</html>
