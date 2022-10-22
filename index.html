@@ -53,7 +53,7 @@
                 } else if (whoWon === 'computer') {
                     gameLayover.innerText = 'Sorry! You lost!'
                 } else {
-                    gameLayover.innerText = 'We Drew! Let&#39;s play again!'
+                    gameLayover.innerText = `We Drew! Let's play again!`
                 }
                 backgroundLayover.appendChild(gameLayover);
                 gameLayover.appendChild(playAgain);
@@ -63,7 +63,7 @@
             };
 
             const playTTT = event => {
-                
+
                 const buttonChoice1 = document.createElement('button');
                 const buttonChoice2 = document.createElement('button');
                 const buttonChoice3 = document.createElement('button');
@@ -190,6 +190,7 @@
                 } else if (movesMade === 4) {
                     computerChoice = computerChoice.filter(choice => choice !== playerChoosenBox.id);
                     let computerMoveNow = computerChoice[Math.floor(Math.random()*computerChoice.length)];
+                    computerDecision.push(computerMoveNow);
                 
                     playerChoice.forEach(choice => {
                         document.getElementById(choice).innerHTML = '<img class="game-image" src="graphics/x-1.png">';
@@ -345,9 +346,24 @@
 
             };
             
-            
+            const renderDificulty = () => {
+                gameContainer.innerHTML = '';
 
-            const renderOptionXO = () => {
+                const optionEasy = document.createElement('button');
+                optionEasy.innerText = 'easy';
+                optionEasy.id = 'easy';
+                optionEasy.onclick = renderOptionXO;
+                gameContainer.appendChild(optionEasy);
+
+                const optionHard = document.createElement('button');
+                optionHard.innerText = 'hard';
+                optionHard.id = 'hard';
+                optionHard.onclick = renderOptionXO;
+                gameContainer.appendChild(optionHard);
+            }
+
+            const renderOptionXO = (event) => {
+                let gameDificulty = event.target.id;
                 gameContainer.innerHTML = '';
 
                 movesMade = 0;
@@ -370,7 +386,7 @@
                 gameContainer.appendChild(optionO);
             };
 
-            renderOptionXO();
+            renderDificulty();
 
         </script>
     </body>
