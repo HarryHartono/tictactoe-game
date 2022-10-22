@@ -98,8 +98,9 @@
                 movesMade = movesMade + 1
                 const playerChoosenBox = event.target;
                 playerChoice.push(playerChoosenBox.id);
+                let playerWin = false
 
-                if (movesMade <= 4) {
+                if (movesMade < 3) {
                     computerChoice = computerChoice.filter(choice => choice !== playerChoosenBox.id);
                     let computerMoveNow = computerChoice[Math.floor(Math.random()*computerChoice.length)];
                     document.getElementById(computerMoveNow).innerHTML = '<img class="game-image" src="graphics/o-1.png">';
@@ -110,12 +111,148 @@
                     });
                 
                     document.getElementById(playerChoosenBox.id).disabled = true;
-                } else {
+                } else if (movesMade === 3) {
+                    computerChoice = computerChoice.filter(choice => choice !== playerChoosenBox.id);
+                    let computerMoveNow = computerChoice[Math.floor(Math.random()*computerChoice.length)];
+                
                     playerChoice.forEach(choice => {
                         document.getElementById(choice).innerHTML = '<img class="game-image" src="graphics/x-1.png">';
                     });
+
+                    playerChoice = playerChoice.sort();
+
+                    waysToWin.forEach(winPattern => {
+                        console.log(winPattern[0] === playerChoice[0])
+                        if (winPattern[0] === playerChoice[0] && winPattern[1] === playerChoice[1] && winPattern[2] === playerChoice[2]) {
+                            computerChoice.forEach(choice => {
+                                document.getElementById(choice).disabled = true;
+                                playerWin = true
+                            })
+                        }
+                    })
+
+                    if (playerWin === false) {
+                        document.getElementById(computerMoveNow).innerHTML = '<img class="game-image" src="graphics/o-1.png">';
+                        document.getElementById(computerMoveNow).disabled = true;
+                        computerChoice = computerChoice.filter(choice => choice !== computerMoveNow);
+                    }
+
                     document.getElementById(playerChoosenBox.id).disabled = true;
+                
+                } else if (movesMade === 4) {
+                    computerChoice = computerChoice.filter(choice => choice !== playerChoosenBox.id);
+                    let computerMoveNow = computerChoice[Math.floor(Math.random()*computerChoice.length)];
+                
+                    playerChoice.forEach(choice => {
+                        document.getElementById(choice).innerHTML = '<img class="game-image" src="graphics/x-1.png">';
+                    });
+
+                    playerChoice = playerChoice.sort();
+
+                    waysToWin.forEach(winPattern => {
+                        if (winPattern[0] === playerChoice[0] && winPattern[1] === playerChoice[1] && winPattern[2] === playerChoice[2]) {
+                            computerChoice.forEach(choice => {
+                                document.getElementById(choice).disabled = true;
+                            })
+                            playerWin = true;
+                            
+                        } else if (winPattern[0] === playerChoice[1] && winPattern[1] === playerChoice[2] && winPattern[2] === playerChoice[3]) {
+                            computerChoice.forEach(choice => {
+                                document.getElementById(choice).disabled = true;
+                            })
+                            playerWin = true;
+
+                        } else if (winPattern[0] === playerChoice[0] && winPattern[1] === playerChoice[1] && winPattern[2] === playerChoice[3]) {
+                            computerChoice.forEach(choice => {
+                                document.getElementById(choice).disabled = true;
+                            })
+                            playerWin = true;
+
+                        } else if (winPattern[0] === playerChoice[0] && winPattern[1] === playerChoice[2] && winPattern[2] === playerChoice[3]) {
+                            computerChoice.forEach(choice => {
+                                document.getElementById(choice).disabled = true;
+                            })
+                            playerWin = true;
+                        }
+                    });
+
+                    if (playerWin === false) {
+                        document.getElementById(computerMoveNow).innerHTML = '<img class="game-image" src="graphics/o-1.png">';
+                        document.getElementById(computerMoveNow).disabled = true;
+                        computerChoice = computerChoice.filter(choice => choice !== computerMoveNow);
+                    };
+
+                    document.getElementById(playerChoosenBox.id).disabled = true;
+
+                } else {
+                    computerChoice = computerChoice.filter(choice => choice !== playerChoosenBox.id);
+                    let computerMoveNow = computerChoice[Math.floor(Math.random()*computerChoice.length)];
+                
+                    playerChoice.forEach(choice => {
+                        document.getElementById(choice).innerHTML = '<img class="game-image" src="graphics/x-1.png">';
+                    });
+
+                    playerChoice = playerChoice.sort();
+
+                    waysToWin.forEach(winPattern => {
+                        if (winPattern[0] === playerChoice[0] && winPattern[1] === playerChoice[1] && winPattern[2] === playerChoice[2]) {
+                            computerChoice.forEach(choice => {
+                                document.getElementById(choice).disabled = true;
+                            })
+                            playerWin = true;
+                            
+                        } else if (winPattern[0] === playerChoice[0] && winPattern[1] === playerChoice[1] && winPattern[2] === playerChoice[3]) {
+                            computerChoice.forEach(choice => {
+                                document.getElementById(choice).disabled = true;
+                            })
+                            playerWin = true;
+
+                        } else if (winPattern[0] === playerChoice[0] && winPattern[1] === playerChoice[1] && winPattern[2] === playerChoice[4]) {
+                            computerChoice.forEach(choice => {
+                                document.getElementById(choice).disabled = true;
+                            })
+                            playerWin = true;
+
+                        } else if (winPattern[0] === playerChoice[0] && winPattern[1] === playerChoice[2] && winPattern[2] === playerChoice[3]) {
+                            computerChoice.forEach(choice => {
+                                document.getElementById(choice).disabled = true;
+                            })
+                            playerWin = true;
+                        } else if (winPattern[0] === playerChoice[0] && winPattern[1] === playerChoice[2] && winPattern[2] === playerChoice[4]) {
+                            computerChoice.forEach(choice => {
+                                document.getElementById(choice).disabled = true;
+                            })
+                            playerWin = true;
+
+                        } else if (winPattern[0] === playerChoice[0] && winPattern[1] === playerChoice[3] && winPattern[2] === playerChoice[4]) {
+                            computerChoice.forEach(choice => {
+                                document.getElementById(choice).disabled = true;
+                            })
+                            playerWin = true;
+                        } else if (winPattern[0] === playerChoice[1] && winPattern[1] === playerChoice[2] && winPattern[2] === playerChoice[3]) {
+                            computerChoice.forEach(choice => {
+                                document.getElementById(choice).disabled = true;
+                            })
+                            playerWin = true;
+
+                        } else if (winPattern[0] === playerChoice[1] && winPattern[1] === playerChoice[3] && winPattern[2] === playerChoice[4]) {
+                            computerChoice.forEach(choice => {
+                                document.getElementById(choice).disabled = true;
+                            })
+                            playerWin = true;
+                        } else if (winPattern[0] === playerChoice[2] && winPattern[1] === playerChoice[3] && winPattern[2] === playerChoice[4]) {
+                            computerChoice.forEach(choice => {
+                                document.getElementById(choice).disabled = true;
+                            })
+                            playerWin = true;
+                        };
+                    });
+
+                    if (playerWin === false) {
+                        
+                    }; 
                 }
+
             };
             
 
@@ -136,8 +273,6 @@
             };
 
             renderOptionXO();
-            
-            
 
         </script>
     </body>
