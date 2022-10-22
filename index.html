@@ -23,35 +23,12 @@
 
             let movesMade = 0;
             let computerChoice = ['button1', 'button2', 'button3', 'button4', 'button5', 'button6', 'button7', 'button8', 'button9'];
+            let computerDecision = [];
             let playerChoice = [];
+            let playerWin = false;
+            let computerWin = false;
 
-            const buttonChoice1 = document.createElement('button');
-            const buttonChoice2 = document.createElement('button');
-            const buttonChoice3 = document.createElement('button');
-            const buttonChoice4 = document.createElement('button');
-            const buttonChoice5 = document.createElement('button');
-            const buttonChoice6 = document.createElement('button');
-            const buttonChoice7 = document.createElement('button');
-            const buttonChoice8 = document.createElement('button');
-            const buttonChoice9 = document.createElement('button');
-            buttonChoice1.classList.add('button-style');
-            buttonChoice2.classList.add('button-style');
-            buttonChoice3.classList.add('button-style');
-            buttonChoice4.classList.add('button-style');
-            buttonChoice5.classList.add('button-style');
-            buttonChoice6.classList.add('button-style');
-            buttonChoice7.classList.add('button-style');
-            buttonChoice8.classList.add('button-style');
-            buttonChoice9.classList.add('button-style');
-            buttonChoice1.id = 'button1';
-            buttonChoice2.id = 'button2';
-            buttonChoice3.id = 'button3';
-            buttonChoice4.id = 'button4';
-            buttonChoice5.id = 'button5';
-            buttonChoice6.id = 'button6';
-            buttonChoice7.id = 'button7';
-            buttonChoice8.id = 'button8';
-            buttonChoice9.id = 'button9';
+            
 
             const blankImage = document.createElement('img');
             blankImage.src = 'graphics/empty-canvas.png';
@@ -64,13 +41,63 @@
             oImage.classList.add('game-image');
             oImage.src = 'graphics/o-1.png'
 
+            const gameOverLayover = (whoWon) => {
+                const backgroundLayover = document.createElement('div');
+                const gameLayover = document.createElement('div');
+                const playAgain = document.createElement('button');
+                playAgain.innerText = 'Play Again';
+                playAgain.onclick = renderOptionXO;
+
+                if (whoWon === 'player') {
+                    gameLayover.innerText = 'Congratulation! You won!'
+                } else if (whoWon === 'computer') {
+                    gameLayover.innerText = 'Sorry! You lost!'
+                } else {
+                    gameLayover.innerText = 'We Drew! Let&#39;s play again!'
+                }
+                backgroundLayover.appendChild(gameLayover);
+                gameLayover.appendChild(playAgain);
+                backgroundLayover.style = 'position: absolute; top: 0; bottom:0, left:0; right:0; background-color: rgba(0, 0, 0, 0.4);'
+                const actualGameContainer = document.getElementById('playGameCont')
+                actualGameContainer.appendChild(backgroundLayover)
+            };
+
             const playTTT = event => {
+                
+                const buttonChoice1 = document.createElement('button');
+                const buttonChoice2 = document.createElement('button');
+                const buttonChoice3 = document.createElement('button');
+                const buttonChoice4 = document.createElement('button');
+                const buttonChoice5 = document.createElement('button');
+                const buttonChoice6 = document.createElement('button');
+                const buttonChoice7 = document.createElement('button');
+                const buttonChoice8 = document.createElement('button');
+                const buttonChoice9 = document.createElement('button');
+                buttonChoice1.classList.add('button-style');
+                buttonChoice2.classList.add('button-style');
+                buttonChoice3.classList.add('button-style');
+                buttonChoice4.classList.add('button-style');
+                buttonChoice5.classList.add('button-style');
+                buttonChoice6.classList.add('button-style');
+                buttonChoice7.classList.add('button-style');
+                buttonChoice8.classList.add('button-style');
+                buttonChoice9.classList.add('button-style');
+                buttonChoice1.id = 'button1';
+                buttonChoice2.id = 'button2';
+                buttonChoice3.id = 'button3';
+                buttonChoice4.id = 'button4';
+                buttonChoice5.id = 'button5';
+                buttonChoice6.id = 'button6';
+                buttonChoice7.id = 'button7';
+                buttonChoice8.id = 'button8';
+                buttonChoice9.id = 'button9';
                 const buttonPressChoice = event.target
                 choiceOfPlayer = buttonPressChoice.id
                 gameContainer.innerHTML = '';
                 
                 const playGameCont = document.createElement('div');
-                playGameCont.style = 'width: 600px; display: grid; grid-template-columns: 1fr 1fr 1fr;'
+                playGameCont.id = 'playGameCont'
+                playGameCont.style = 'width: 600px; display: grid; grid-template-columns: 1fr 1fr 1fr; position: relative;'
         
                 buttonChoice1.onclick = playerMakesMove;
                 buttonChoice2.onclick = playerMakesMove;
@@ -98,11 +125,13 @@
                 movesMade = movesMade + 1
                 const playerChoosenBox = event.target;
                 playerChoice.push(playerChoosenBox.id);
-                let playerWin = false
+                
+                
 
                 if (movesMade < 3) {
                     computerChoice = computerChoice.filter(choice => choice !== playerChoosenBox.id);
                     let computerMoveNow = computerChoice[Math.floor(Math.random()*computerChoice.length)];
+                    computerDecision.push(computerMoveNow);
                     document.getElementById(computerMoveNow).innerHTML = '<img class="game-image" src="graphics/o-1.png">';
                     document.getElementById(computerMoveNow).disabled = true;
                     computerChoice = computerChoice.filter(choice => choice !== computerMoveNow);
@@ -111,33 +140,52 @@
                     });
                 
                     document.getElementById(playerChoosenBox.id).disabled = true;
+
                 } else if (movesMade === 3) {
                     computerChoice = computerChoice.filter(choice => choice !== playerChoosenBox.id);
                     let computerMoveNow = computerChoice[Math.floor(Math.random()*computerChoice.length)];
-                
+                    computerDecision.push(computerMoveNow);
                     playerChoice.forEach(choice => {
                         document.getElementById(choice).innerHTML = '<img class="game-image" src="graphics/x-1.png">';
                     });
 
                     playerChoice = playerChoice.sort();
+                    computerDecision = computerDecision.sort();
 
                     waysToWin.forEach(winPattern => {
-                        console.log(winPattern[0] === playerChoice[0])
                         if (winPattern[0] === playerChoice[0] && winPattern[1] === playerChoice[1] && winPattern[2] === playerChoice[2]) {
                             computerChoice.forEach(choice => {
                                 document.getElementById(choice).disabled = true;
                                 playerWin = true
                             })
                         }
-                    })
+                    });
+
+                    waysToWin.forEach(winPattern => {
+                        if (winPattern[0] === computerDecision[0] && winPattern[1] === computerDecision[1] && winPattern[2] === computerDecision[2]) {
+                            computerChoice.forEach(choice => {
+                                document.getElementById(choice).disabled = true;
+                                computerWin = true
+                            })
+                        }
+                    });
 
                     if (playerWin === false) {
                         document.getElementById(computerMoveNow).innerHTML = '<img class="game-image" src="graphics/o-1.png">';
                         document.getElementById(computerMoveNow).disabled = true;
                         computerChoice = computerChoice.filter(choice => choice !== computerMoveNow);
+                    } else if (computerWin === true) {
+                        document.getElementById(computerMoveNow).innerHTML = '<img class="game-image" src="graphics/o-1.png">';
+                        document.getElementById(computerMoveNow).disabled = true;
                     }
-
+ 
                     document.getElementById(playerChoosenBox.id).disabled = true;
+
+                    if (playerWin === true) {
+                        gameOverLayover('player');
+                    } else if (computerWin === true) {
+                        gameOverLayover('computer');
+                    }; 
                 
                 } else if (movesMade === 4) {
                     computerChoice = computerChoice.filter(choice => choice !== playerChoosenBox.id);
@@ -176,17 +224,55 @@
                         }
                     });
 
+                    computerDecision = computerDecision.sort();
+                    waysToWin.forEach(winPattern => {
+                        if (winPattern[0] === computerDecision[0] && winPattern[1] === computerDecision[1] && winPattern[2] === computerDecision[2]) {
+                            computerChoice.forEach(choice => {
+                                document.getElementById(choice).disabled = true;
+                            })
+                            computerWin = true;
+                            
+                        } else if (winPattern[0] === computerDecision[1] && winPattern[1] === computerDecision[2] && winPattern[2] === computerDecision[3]) {
+                            computerChoice.forEach(choice => {
+                                document.getElementById(choice).disabled = true;
+                            })
+                            computerWin = true;
+
+                        } else if (winPattern[0] === computerDecision[0] && winPattern[1] === computerDecision[1] && winPattern[2] === computerDecision[3]) {
+                            computerChoice.forEach(choice => {
+                                document.getElementById(choice).disabled = true;
+                            })
+                            computerWin = true;
+
+                        } else if (winPattern[0] === computerDecision[0] && winPattern[1] === computerDecision[2] && winPattern[2] === computerDecision[3]) {
+                            computerChoice.forEach(choice => {
+                                document.getElementById(choice).disabled = true;
+                            })
+                            computerWin = true;
+                        }
+                    });
+
                     if (playerWin === false) {
                         document.getElementById(computerMoveNow).innerHTML = '<img class="game-image" src="graphics/o-1.png">';
                         document.getElementById(computerMoveNow).disabled = true;
                         computerChoice = computerChoice.filter(choice => choice !== computerMoveNow);
+                    } else if (computerWin === true) {
+                        document.getElementById(computerMoveNow).innerHTML = '<img class="game-image" src="graphics/o-1.png">';
+                        document.getElementById(computerMoveNow).disabled = true;
                     };
 
                     document.getElementById(playerChoosenBox.id).disabled = true;
 
+                    if (playerWin === true) {
+                        gameOverLayover('player');
+                    } else if (computerWin === true) {
+                        gameOverLayover('computer');
+                    }; 
+
                 } else {
                     computerChoice = computerChoice.filter(choice => choice !== playerChoosenBox.id);
                     let computerMoveNow = computerChoice[Math.floor(Math.random()*computerChoice.length)];
+                    document.getElementById(playerChoosenBox.id).disabled = true;
                 
                     playerChoice.forEach(choice => {
                         document.getElementById(choice).innerHTML = '<img class="game-image" src="graphics/x-1.png">';
@@ -248,17 +334,29 @@
                         };
                     });
 
-                    if (playerWin === false) {
-                        
+                    if (playerWin === false && computerWin === false) {
+                        gameOverLayover('draw');
+                    } else if (playerWin === true) {
+                        gameOverLayover('player');
+                    } else if (computerWin === true) {
+                        gameOverLayover('computer');
                     }; 
                 }
 
             };
             
+            
 
             const renderOptionXO = () => {
                 gameContainer.innerHTML = '';
 
+                movesMade = 0;
+                computerChoice = ['button1', 'button2', 'button3', 'button4', 'button5', 'button6', 'button7', 'button8', 'button9'];
+                computerDecision = [];
+                playerChoice = [];
+                playerWin = false;
+                computerWin = false;
+                
                 const optionX = document.createElement('button');
                 optionX.innerText = 'X';
                 optionX.id = 'X'
