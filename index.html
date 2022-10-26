@@ -23,10 +23,14 @@
 
             let movesMade = 0;
             let computerChoice = ['button1', 'button2', 'button3', 'button4', 'button5', 'button6', 'button7', 'button8', 'button9'];
+            let computerFirstMove = ['button1', 'button3', 'button5', 'button7', 'button9'];
             let computerDecision = [];
             let playerChoice = [];
             let playerWin = false;
             let computerWin = false;
+
+            let choiceOfPlayer = '';
+            // let gameDificulty = '';
 
             
 
@@ -127,14 +131,138 @@
                 playerChoice.push(playerChoosenBox.id);
                 
                 
-
-                if (movesMade < 3) {
+                let computerMoveNow = ''
+                
+                if (movesMade === 1) {
                     computerChoice = computerChoice.filter(choice => choice !== playerChoosenBox.id);
-                    let computerMoveNow = computerChoice[Math.floor(Math.random()*computerChoice.length)];
+                    computerFirstMove = computerFirstMove.filter(choice => choice !== playerChoosenBox.id);
+                    
+                    if (playerChoice[0] === 'button5') {
+                        computerMoveNow = computerFirstMove[Math.floor(Math.random()*computerFirstMove.length)];
+
+                    } else if (playerChoice[0] === 'button2') {
+                        computerMoveNow = 'button8'
+                        
+                    }else if (playerChoice[0] === 'button8') {
+                        computerMoveNow = 'button2'
+                        
+                    } else if (playerChoice[0] === 'button4') {
+                        computerMoveNow = 'button6'
+                        
+                    } else if (playerChoice[0] === 'button6') {
+                        computerMoveNow = 'button4'
+                        
+                    } else {
+                        computerMoveNow = 'button5'
+                    };
+
                     computerDecision.push(computerMoveNow);
                     document.getElementById(computerMoveNow).innerHTML = '<img class="game-image" src="graphics/o-1.png">';
                     document.getElementById(computerMoveNow).disabled = true;
                     computerChoice = computerChoice.filter(choice => choice !== computerMoveNow);
+                    playerChoice.forEach(choice => {
+                        document.getElementById(choice).innerHTML = '<img class="game-image" src="graphics/x-1.png">';
+                    });
+                
+                    document.getElementById(playerChoosenBox.id).disabled = true;
+                
+                } else if (movesMade === 2) {
+                    computerChoice = computerChoice.filter(choice => choice !== playerChoosenBox.id);
+                    let computerNextMoveTwo = '';
+                    playerChoice = playerChoice.sort();
+                    if (playerChoice[0] === 'button1') {
+                        if (playerChoice[1] === 'button2') {
+                            computerNextMoveTwo = 'button3';
+                        } else if (playerChoice[1] === 'button3') {
+                            computerNextMoveTwo = 'button2';
+                        } else if (playerChoice[1] === 'button4') {
+                            computerNextMoveTwo = 'button7';
+                        } else if (playerChoice[1] === 'button5') {
+                            computerNextMoveTwo = 'button9';
+                        } else if (playerChoice[1] === 'button7') {
+                            computerNextMoveTwo = 'button4';
+                        } else if (playerChoice[1] === 'button9') {
+                            computerNextMoveTwo = 'button5';
+                        } else {
+                            computerNextMoveTwo = computerChoice[Math.floor(Math.random()*computerChoice.length)];
+                        }
+                    } else if (playerChoice[0] === 'button2') {
+                        if (playerChoice[1] === 'button3') {
+                            computerNextMoveTwo = 'button1';
+                        } else if (playerChoice[1] === 'button5') {
+                            computerNextMoveTwo = 'button8';
+                        } else if (playerChoice[1] === 'button8') {
+                            computerNextMoveTwo = 'button5';
+                        } else {
+                            computerNextMoveTwo = computerChoice[Math.floor(Math.random()*computerChoice.length)];
+                        }
+                    } else if (playerChoice[0] === 'button3') {
+                        if (playerChoice[1] === 'button5') {
+                            computerNextMoveTwo = 'button7';
+                        } else if (playerChoice[1] === 'button6') {
+                            computerNextMoveTwo = 'button9';
+                        } else if (playerChoice[1] === 'button7') {
+                            computerNextMoveTwo = 'button5';
+                        } else if (playerChoice[1] === 'button5') {
+                            computerNextMoveTwo = 'button7';
+                        } else {
+                            computerNextMoveTwo = computerChoice[Math.floor(Math.random()*computerChoice.length)];
+                        }
+                    } else if (playerChoice[0] === 'button4') {
+                        if (playerChoice[1] === 'button5') {
+                            computerNextMoveTwo = 'button6';
+                        } else if (playerChoice[1] === 'button6') {
+                            computerNextMoveTwo = 'button5';
+                        } else if (playerChoice[1] === 'button7') {
+                            computerNextMoveTwo = 'button1';
+                        } else {
+                            computerNextMoveTwo = computerChoice[Math.floor(Math.random()*computerChoice.length)];
+                        }
+                    
+                    } else if (playerChoice[0] === 'button5') {
+                        if (playerChoice[1] === 'button6') {
+                            computerNextMoveTwo = 'button4';
+                        } else if (playerChoice[1] === 'button7') {
+                            computerNextMoveTwo = 'button3';
+                        } else if (playerChoice[1] === 'button8') {
+                            computerNextMoveTwo = 'button2';
+                        } else if (playerChoice[1] === 'button9') {
+                            computerNextMoveTwo = 'button1';
+                        } else {
+                            computerNextMoveTwo = computerChoice[Math.floor(Math.random()*computerChoice.length)];
+                        }
+                    } else if (playerChoice[0] === 'button6' && playerChoice[1] === 'button9') {
+                        computerNextMoveTwo = 'button3';
+                    } else if (playerChoice[0] === 'button7') {
+                        if (playerChoice[1] === 'button8') {
+                            computerNextMoveTwo = 'button9';
+                        } else if (playerChoice[1] === 'button9') {
+                            computerNextMoveTwo = 'button8';
+                        } else {
+                            computerNextMoveTwo = computerChoice[Math.floor(Math.random()*computerChoice.length)];
+                        }
+                    } else if (playerChoice[0] === 'button7') {
+                        if (playerChoice[1] === 'button8') {
+                            computerNextMoveTwo = 'button9'
+                        } else if (playerChoice[1] === 'button9') {
+                            computerNextMoveTwo = 'button8'
+                        } else {
+                        computerNextMoveTwo = computerChoice[Math.floor(Math.random()*computerChoice.length)];
+                        };
+                    } else if (playerChoice[0] === 'button8' && playerChoice[1] === 'button9') {
+                        computerNextMoveTwo = 'button7';
+                    } else {
+                        computerNextMoveTwo = computerChoice[Math.floor(Math.random()*computerChoice.length)];
+                    };
+
+                    if (playerChoice.includes(computerNextMoveTwo)) {
+                        computerNextMoveTwo = computerChoice[Math.floor(Math.random()*computerChoice.length)];
+                    };
+                    
+                    computerDecision.push(computerNextMoveTwo);
+                    document.getElementById(computerNextMoveTwo).innerHTML = '<img class="game-image" src="graphics/o-1.png">';
+                    document.getElementById(computerNextMoveTwo).disabled = true;
+                    computerChoice = computerChoice.filter(choice => choice !== computerNextMoveTwo);
                     playerChoice.forEach(choice => {
                         document.getElementById(choice).innerHTML = '<img class="game-image" src="graphics/x-1.png">';
                     });
@@ -343,9 +471,230 @@
                         gameOverLayover('computer');
                     }; 
                 }
+            };        
 
-            };
+
+
+
+                // if (movesMade < 3) {
+                //     computerChoice = computerChoice.filter(choice => choice !== playerChoosenBox.id);
+                //     let computerMoveNow = computerChoice[Math.floor(Math.random()*computerChoice.length)];
+                //     computerDecision.push(computerMoveNow);
+                //     document.getElementById(computerMoveNow).innerHTML = '<img class="game-image" src="graphics/o-1.png">';
+                //     document.getElementById(computerMoveNow).disabled = true;
+                //     computerChoice = computerChoice.filter(choice => choice !== computerMoveNow);
+                //     playerChoice.forEach(choice => {
+                //         document.getElementById(choice).innerHTML = '<img class="game-image" src="graphics/x-1.png">';
+                //     });
+                
+                //     document.getElementById(playerChoosenBox.id).disabled = true;
+
+                // } else if (movesMade === 3) {
+                //     computerChoice = computerChoice.filter(choice => choice !== playerChoosenBox.id);
+                //     let computerMoveNow = computerChoice[Math.floor(Math.random()*computerChoice.length)];
+                //     computerDecision.push(computerMoveNow);
+                //     playerChoice.forEach(choice => {
+                //         document.getElementById(choice).innerHTML = '<img class="game-image" src="graphics/x-1.png">';
+                //     });
+
+                //     playerChoice = playerChoice.sort();
+                //     computerDecision = computerDecision.sort();
+
+                //     waysToWin.forEach(winPattern => {
+                //         if (winPattern[0] === playerChoice[0] && winPattern[1] === playerChoice[1] && winPattern[2] === playerChoice[2]) {
+                //             computerChoice.forEach(choice => {
+                //                 document.getElementById(choice).disabled = true;
+                //                 playerWin = true
+                //             })
+                //         }
+                //     });
+
+                //     waysToWin.forEach(winPattern => {
+                //         if (winPattern[0] === computerDecision[0] && winPattern[1] === computerDecision[1] && winPattern[2] === computerDecision[2]) {
+                //             computerChoice.forEach(choice => {
+                //                 document.getElementById(choice).disabled = true;
+                //                 computerWin = true
+                //             })
+                //         }
+                //     });
+
+                //     if (playerWin === false) {
+                //         document.getElementById(computerMoveNow).innerHTML = '<img class="game-image" src="graphics/o-1.png">';
+                //         document.getElementById(computerMoveNow).disabled = true;
+                //         computerChoice = computerChoice.filter(choice => choice !== computerMoveNow);
+                //     } else if (computerWin === true) {
+                //         document.getElementById(computerMoveNow).innerHTML = '<img class="game-image" src="graphics/o-1.png">';
+                //         document.getElementById(computerMoveNow).disabled = true;
+                //     }
+ 
+                //     document.getElementById(playerChoosenBox.id).disabled = true;
+
+                //     if (playerWin === true) {
+                //         gameOverLayover('player');
+                //     } else if (computerWin === true) {
+                //         gameOverLayover('computer');
+                //     }; 
+                
+                // } else if (movesMade === 4) {
+                //     computerChoice = computerChoice.filter(choice => choice !== playerChoosenBox.id);
+                //     let computerMoveNow = computerChoice[Math.floor(Math.random()*computerChoice.length)];
+                //     computerDecision.push(computerMoveNow);
+                
+                //     playerChoice.forEach(choice => {
+                //         document.getElementById(choice).innerHTML = '<img class="game-image" src="graphics/x-1.png">';
+                //     });
+
+                //     playerChoice = playerChoice.sort();
+
+                //     waysToWin.forEach(winPattern => {
+                //         if (winPattern[0] === playerChoice[0] && winPattern[1] === playerChoice[1] && winPattern[2] === playerChoice[2]) {
+                //             computerChoice.forEach(choice => {
+                //                 document.getElementById(choice).disabled = true;
+                //             })
+                //             playerWin = true;
+                            
+                //         } else if (winPattern[0] === playerChoice[1] && winPattern[1] === playerChoice[2] && winPattern[2] === playerChoice[3]) {
+                //             computerChoice.forEach(choice => {
+                //                 document.getElementById(choice).disabled = true;
+                //             })
+                //             playerWin = true;
+
+                //         } else if (winPattern[0] === playerChoice[0] && winPattern[1] === playerChoice[1] && winPattern[2] === playerChoice[3]) {
+                //             computerChoice.forEach(choice => {
+                //                 document.getElementById(choice).disabled = true;
+                //             })
+                //             playerWin = true;
+
+                //         } else if (winPattern[0] === playerChoice[0] && winPattern[1] === playerChoice[2] && winPattern[2] === playerChoice[3]) {
+                //             computerChoice.forEach(choice => {
+                //                 document.getElementById(choice).disabled = true;
+                //             })
+                //             playerWin = true;
+                //         }
+                //     });
+
+                //     computerDecision = computerDecision.sort();
+                //     waysToWin.forEach(winPattern => {
+                //         if (winPattern[0] === computerDecision[0] && winPattern[1] === computerDecision[1] && winPattern[2] === computerDecision[2]) {
+                //             computerChoice.forEach(choice => {
+                //                 document.getElementById(choice).disabled = true;
+                //             })
+                //             computerWin = true;
+                            
+                //         } else if (winPattern[0] === computerDecision[1] && winPattern[1] === computerDecision[2] && winPattern[2] === computerDecision[3]) {
+                //             computerChoice.forEach(choice => {
+                //                 document.getElementById(choice).disabled = true;
+                //             })
+                //             computerWin = true;
+
+                //         } else if (winPattern[0] === computerDecision[0] && winPattern[1] === computerDecision[1] && winPattern[2] === computerDecision[3]) {
+                //             computerChoice.forEach(choice => {
+                //                 document.getElementById(choice).disabled = true;
+                //             })
+                //             computerWin = true;
+
+                //         } else if (winPattern[0] === computerDecision[0] && winPattern[1] === computerDecision[2] && winPattern[2] === computerDecision[3]) {
+                //             computerChoice.forEach(choice => {
+                //                 document.getElementById(choice).disabled = true;
+                //             })
+                //             computerWin = true;
+                //         }
+                //     });
+
+            //         if (playerWin === false) {
+            //             document.getElementById(computerMoveNow).innerHTML = '<img class="game-image" src="graphics/o-1.png">';
+            //             document.getElementById(computerMoveNow).disabled = true;
+            //             computerChoice = computerChoice.filter(choice => choice !== computerMoveNow);
+            //         } else if (computerWin === true) {
+            //             document.getElementById(computerMoveNow).innerHTML = '<img class="game-image" src="graphics/o-1.png">';
+            //             document.getElementById(computerMoveNow).disabled = true;
+            //         };
+
+            //         document.getElementById(playerChoosenBox.id).disabled = true;
+
+            //         if (playerWin === true) {
+            //             gameOverLayover('player');
+            //         } else if (computerWin === true) {
+            //             gameOverLayover('computer');
+            //         }; 
+
+            //     } else {
+            //         computerChoice = computerChoice.filter(choice => choice !== playerChoosenBox.id);
+            //         let computerMoveNow = computerChoice[Math.floor(Math.random()*computerChoice.length)];
+            //         document.getElementById(playerChoosenBox.id).disabled = true;
+                
+            //         playerChoice.forEach(choice => {
+            //             document.getElementById(choice).innerHTML = '<img class="game-image" src="graphics/x-1.png">';
+            //         });
+
+            //         playerChoice = playerChoice.sort();
+
+            //         waysToWin.forEach(winPattern => {
+            //             if (winPattern[0] === playerChoice[0] && winPattern[1] === playerChoice[1] && winPattern[2] === playerChoice[2]) {
+            //                 computerChoice.forEach(choice => {
+            //                     document.getElementById(choice).disabled = true;
+            //                 })
+            //                 playerWin = true;
+                            
+            //             } else if (winPattern[0] === playerChoice[0] && winPattern[1] === playerChoice[1] && winPattern[2] === playerChoice[3]) {
+            //                 computerChoice.forEach(choice => {
+            //                     document.getElementById(choice).disabled = true;
+            //                 })
+            //                 playerWin = true;
+
+            //             } else if (winPattern[0] === playerChoice[0] && winPattern[1] === playerChoice[1] && winPattern[2] === playerChoice[4]) {
+            //                 computerChoice.forEach(choice => {
+            //                     document.getElementById(choice).disabled = true;
+            //                 })
+            //                 playerWin = true;
+
+            //             } else if (winPattern[0] === playerChoice[0] && winPattern[1] === playerChoice[2] && winPattern[2] === playerChoice[3]) {
+            //                 computerChoice.forEach(choice => {
+            //                     document.getElementById(choice).disabled = true;
+            //                 })
+            //                 playerWin = true;
+            //             } else if (winPattern[0] === playerChoice[0] && winPattern[1] === playerChoice[2] && winPattern[2] === playerChoice[4]) {
+            //                 computerChoice.forEach(choice => {
+            //                     document.getElementById(choice).disabled = true;
+            //                 })
+            //                 playerWin = true;
+
+            //             } else if (winPattern[0] === playerChoice[0] && winPattern[1] === playerChoice[3] && winPattern[2] === playerChoice[4]) {
+            //                 computerChoice.forEach(choice => {
+            //                     document.getElementById(choice).disabled = true;
+            //                 })
+            //                 playerWin = true;
+            //             } else if (winPattern[0] === playerChoice[1] && winPattern[1] === playerChoice[2] && winPattern[2] === playerChoice[3]) {
+            //                 computerChoice.forEach(choice => {
+            //                     document.getElementById(choice).disabled = true;
+            //                 })
+            //                 playerWin = true;
+
+            //             } else if (winPattern[0] === playerChoice[1] && winPattern[1] === playerChoice[3] && winPattern[2] === playerChoice[4]) {
+            //                 computerChoice.forEach(choice => {
+            //                     document.getElementById(choice).disabled = true;
+            //                 })
+            //                 playerWin = true;
+            //             } else if (winPattern[0] === playerChoice[2] && winPattern[1] === playerChoice[3] && winPattern[2] === playerChoice[4]) {
+            //                 computerChoice.forEach(choice => {
+            //                     document.getElementById(choice).disabled = true;
+            //                 })
+            //                 playerWin = true;
+            //             };
+            //         });
+
+            //         if (playerWin === false && computerWin === false) {
+            //             gameOverLayover('draw');
+            //         } else if (playerWin === true) {
+            //             gameOverLayover('player');
+            //         } else if (computerWin === true) {
+            //             gameOverLayover('computer');
+            //         }; 
+            //     }
+
+            // };
             
+            /*
             const renderDificulty = () => {
                 gameContainer.innerHTML = '';
 
@@ -355,15 +704,16 @@
                 optionEasy.onclick = renderOptionXO;
                 gameContainer.appendChild(optionEasy);
 
-                const optionHard = document.createElement('button');
-                optionHard.innerText = 'hard';
-                optionHard.id = 'hard';
-                optionHard.onclick = renderOptionXO;
+                const optionMedium = document.createElement('button');
+                optionMedium.innerText = 'medium';
+                optionMedium.id = 'medium';
+                optionMedium.onclick = renderOptionXO;
                 gameContainer.appendChild(optionHard);
             }
+            */
 
             const renderOptionXO = (event) => {
-                let gameDificulty = event.target.id;
+                // gameDificulty = event.target.id;
                 gameContainer.innerHTML = '';
 
                 movesMade = 0;
@@ -375,7 +725,7 @@
                 
                 const optionX = document.createElement('button');
                 optionX.innerText = 'X';
-                optionX.id = 'X'
+                optionX.id = 'X';
                 optionX.onclick = playTTT;
                 gameContainer.appendChild(optionX);
 
@@ -386,7 +736,7 @@
                 gameContainer.appendChild(optionO);
             };
 
-            renderDificulty();
+            renderOptionXO();
 
         </script>
     </body>
